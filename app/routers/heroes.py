@@ -2,21 +2,24 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from typing import List
 
-from ..models import villain
+from app.models.hero import Hero
+from app.utils.get_user import get_current_user
+
+
 from ..database import get_session
 
 router = APIRouter(
-    prefix="/villaines",
-    tags=["villaines"],
+    prefix="/heroes",
+    tags=["heroes"],
 )
 
-@router.post("/", response_model=villain)
-def create_villain(villain: villain, session: Session = Depends(get_session)):
-    session.add(villain)
+@router.post("/", response_model=Hero)
+def create_hero(hero: Hero, session: Session = Depends(get_session), current_user: str = Depends(get_current_user)):
+    session.add(hero)
     session.commit()
-    session.refresh(villain)
-    return villain
+    session.refresh(hero)
+    return hero
 
-@router.get("/", response_model=List[villain])
-def read_villaines(session: Session = Depends(get_session)):
-    return session.exec(select(villain)).all()
+@router.get("/", response_model=List[Hero])
+def read_heroes(session: Session = Depends(get_session)):
+    return session.exec(select(Hero)).all()

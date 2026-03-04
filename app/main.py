@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from .routers import heroes
+from .routers import heroes, auth
 from .database import create_db_and_tables
 
 app = FastAPI(title="Heroes API", description="An API to manage heroes", version="1.0.0"   )
@@ -10,6 +10,7 @@ app = FastAPI(title="Heroes API", description="An API to manage heroes", version
 def on_startup():
     create_db_and_tables()
 
+app.include_router(auth.router)
 app.include_router(heroes.router)
 
 @app.get("/")
