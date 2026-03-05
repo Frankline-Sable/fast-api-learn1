@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: herodb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://myuser:mypassword@db:5432/herodb
+    volumes:
+      - .:/app
+    command: >
+      sh -c "alembic upgrade head && fastapi dev app/main.py --host 0.0.0.0"
+
+volumes:
+  postgres_data:
