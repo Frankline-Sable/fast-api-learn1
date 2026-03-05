@@ -39,3 +39,12 @@ engine - pipe.
 Depends(get_session) : opening and closing connection di.
 
 session.commits() -> perm.
+
+Alembic is the tool that tracks changes to the model and db updates.
+Docker we dont need to install postgress into the syste,
+
+to run a container -> docker -compose up -d
+
+driver for postgress and migration tool
+
+Alembic is like git for your db, keeps track of the changes u make to tables.

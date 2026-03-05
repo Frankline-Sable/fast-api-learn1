@@ -6,3 +6,4 @@ class Hero(SQLModel, table=True):
     name: str = Field(index=True)
     secret_name: str
     age: Optional[int] = None
+    is_immortal: bool = False

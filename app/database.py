@@ -1,11 +1,15 @@
 from sqlmodel import  Session, SQLModel, create_engine
 
+# Use the credentials from your docker-compose
+DB_URL = "postgresql://user:password@localhost:5432/herodb"
 
-sqlite_url = "sqlite:///database.db"
-engine = create_engine(sqlite_url, connect_args={"check_same_thread": False})
+engine = create_engine(DB_URL)
 
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)  
+# sqlite_url = "sqlite:///database.db"
+# engine = create_engine(sqlite_url, connect_args={"check_same_thread": False})
+
+# def create_db_and_tables():
+#     SQLModel.metadata.create_all(engine)  
 
 def get_session():
     with Session(engine) as session:
